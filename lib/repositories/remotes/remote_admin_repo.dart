@@ -24,7 +24,13 @@ class RemoteAdminRepo implements AdminDataSource {
     return res;
   }
 
-  void _updateTokenForServices(String token) {
+  @override
+  Future<void> signOut(String token) async {
+    await _adminApiService.signOut(token);
+    _updateTokenForServices(null);
+  }
+
+  void _updateTokenForServices(String? token) {
     _adminApiService.updateToken(token);
   }
 }
