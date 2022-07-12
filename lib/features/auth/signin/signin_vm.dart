@@ -7,12 +7,13 @@ import 'package:fe_ezlang_admin/repositories/respository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthVM with ChangeNotifier {
+class SignInVM with ChangeNotifier {
   final String PREF_SESSION_KEY = 'session';
   final String PREF_SESSION_ACCESSTOKEN = 'session';
   final String PREF_SESSION_ACCESSTOKENEXPIRESIN = 'session';
   final String PREF_SESSION_REFRESHTOKEN = 'session';
   final String PREF_SESSION_REFRESHTOKENEXPIRESIN = 'session';
+
   Session? _currentSession;
   DateTime? _expiryDate;
   Timer? _refreshTokenTimer;

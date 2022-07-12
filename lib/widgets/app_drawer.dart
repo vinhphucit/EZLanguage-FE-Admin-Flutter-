@@ -1,4 +1,4 @@
-import 'package:fe_ezlang_admin/view_models/auth_vm.dart';
+import 'package:fe_ezlang_admin/features/auth/signin/signin_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,7 +28,7 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/');
 
-              Provider.of<AuthVM>(context, listen: false).signOut();
+              Provider.of<SignInVM>(context, listen: false).signOut();
             },
           ),
         ],

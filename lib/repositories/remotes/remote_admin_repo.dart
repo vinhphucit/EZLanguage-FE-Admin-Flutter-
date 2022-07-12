@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fe_ezlang_admin/models/session.dart';
+import 'package:fe_ezlang_admin/models/user.dart';
 import 'package:fe_ezlang_admin/repositories/admin_data_source.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/admin_api_service.dart';
 
@@ -28,6 +29,12 @@ class RemoteAdminRepo implements AdminDataSource {
   Future<void> signOut(String token) async {
     await _adminApiService.signOut(token);
     _updateTokenForServices(null);
+  }
+
+  @override
+  Future<User> signUp(
+      String email, String password, String firstName, String lastName) async {
+    return await _adminApiService.signUp(email, password, firstName, lastName);
   }
 
   void _updateTokenForServices(String? token) {

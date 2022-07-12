@@ -1,7 +1,9 @@
-import 'package:fe_ezlang_admin/view_models/auth_vm.dart';
-import 'package:fe_ezlang_admin/views/auth_screen.dart';
-import 'package:fe_ezlang_admin/views/home_screen.dart';
-import 'package:fe_ezlang_admin/views/splash_screen.dart';
+import 'package:fe_ezlang_admin/features/auth/signin/signin_screen.dart';
+import 'package:fe_ezlang_admin/features/auth/signin/signin_vm.dart';
+
+import 'package:fe_ezlang_admin/features/home/home_screen.dart';
+import 'package:fe_ezlang_admin/features/auth/signup/signup_screen.dart';
+import 'package:fe_ezlang_admin/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +20,10 @@ class AdminApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AuthVM(),
+          create: (context) => SignInVM(),
         )
       ],
-      child: Consumer<AuthVM>(
+      child: Consumer<SignInVM>(
         builder: (context, authVM, child) => MaterialApp(
           title: 'EzLang Admin',
           theme: ThemeData(
@@ -36,9 +38,9 @@ class AdminApp extends StatelessWidget {
                       //         ConnectionState.waiting
                       //     ? SplashScreen()
                       //     :
-                      AuthScreen(),
+                      SignInScreen(),
                 ),
-          routes: {},
+          routes: {SignUpScreen.routeName: (context) => SignUpScreen()},
         ),
       ),
     );
