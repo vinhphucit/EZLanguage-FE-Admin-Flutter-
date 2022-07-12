@@ -35,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
             actions: [
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   },
                   child: Text("OK")),
             ],
@@ -46,8 +46,8 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
-      width: 500,
+      height: 200,
+      width: 200,
       child: Card(
         child: Form(
             key: _formKey,

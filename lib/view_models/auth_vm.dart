@@ -81,16 +81,14 @@ class AuthVM with ChangeNotifier {
     }
   }
 
-  Future<void> signOut(String token) async {
+  Future<void> signOut() async {
     try {
       isLoading = true;
-      await Repository.getInstance().signOut(token);
-      _handleNewSession(null);
-    } on HttpException catch (e) {
-      throw (e as HttpException).toString();
+      await Repository.getInstance()
+          .signOut(_currentSession?.refreshToken ?? '');
     } catch (e) {
-      throw e;
     } finally {
+      _handleNewSession(null);
       isLoading = false;
     }
   }
@@ -143,7 +141,8 @@ class AuthVM with ChangeNotifier {
     try {
       var refreshTokenDate = DateTime.fromMillisecondsSinceEpoch(
           _currentSession!.refreshTokenExpiresAt * 1000);
-      if (refreshTokenDate!.isBefore(DateTime.now())) {
+      if (refreshTokenDate != null &&
+          refreshTokenDate.isBefore(DateTime.now())) {
         Session result = await Repository.getInstance()
             .refreshToken(_currentSession!.refreshToken);
         _handleNewSession(result);
