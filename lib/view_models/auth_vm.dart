@@ -55,7 +55,8 @@ class AuthVM with ChangeNotifier {
           (_currentSession?.accessTokenExpiresAt ?? 0) * 1000);
 
       if (_expiryDate!.isBefore(DateTime.now())) {
-        return false;
+        bool isRefreshTokenSuccessfully = await _tryRefreshToken();
+        if (!isRefreshTokenSuccessfully) return false;
       }
 
       notifyListeners();
@@ -135,6 +136,22 @@ class AuthVM with ChangeNotifier {
   void _cancelRefreshToken() {
     if (_refreshTokenTimer != null) {
       _refreshTokenTimer?.cancel();
+    }
+  }
+
+  Future<bool> _tryRefreshToken() async {
+    try {
+      var refreshTokenDate = DateTime.fromMillisecondsSinceEpoch(
+          _currentSession!.refreshTokenExpiresAt * 1000);
+      if (refreshTokenDate!.isBefore(DateTime.now())) {
+        Session result = await Repository.getInstance()
+            .refreshToken(_currentSession!.refreshToken);
+        _handleNewSession(result);
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
     }
   }
 }
