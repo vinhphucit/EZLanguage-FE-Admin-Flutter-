@@ -1,5 +1,7 @@
+import 'package:fe_ezlang_admin/models/paging_list.dart';
 import 'package:fe_ezlang_admin/models/session.dart';
 import 'package:fe_ezlang_admin/models/user.dart';
+import 'package:fe_ezlang_admin/models/user_list.dart';
 import 'package:fe_ezlang_admin/repositories/admin_data_source.dart';
 import 'package:fe_ezlang_admin/repositories/data_source.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/remote_admin_repo.dart';
@@ -32,8 +34,13 @@ class Repository implements DataSource, AdminDataSource {
   }
 
   @override
-  Future<User> signUp(
+  Future<UserModel> signUp(
       String email, String password, String firstName, String lastName) async {
     return await remoteAdminRepo.signUp(email, password, firstName, lastName);
+  }
+
+  @override
+  Future<UserListModel> getUsers() async {
+    return await remoteAdminRepo.getUsers();
   }
 }

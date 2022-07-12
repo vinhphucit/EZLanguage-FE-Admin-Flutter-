@@ -1,19 +1,20 @@
 import 'package:fe_ezlang_admin/features/auth/signin/signin_vm.dart';
 import 'package:fe_ezlang_admin/features/auth/signup/signup_screen.dart';
+import 'package:fe_ezlang_admin/features/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
-  static final String routeName = 'login';
+  static final String routeName = 'signin';
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> with BaseScreen {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String? email, password;
   Future<void> _submit() async {
@@ -27,26 +28,8 @@ class _SignInScreenState extends State<SignInScreen> {
       await Provider.of<SignInVM>(context, listen: false)
           .signIn(email ?? '', password ?? '');
     } catch (e) {
-      _showErrorDialog(e.toString());
+      showErrorDialog(context, e.toString());
     }
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-        context: context,
-        builder: (ctx) {
-          return AlertDialog(
-            title: Text("Error"),
-            content: Text(message),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    // Navigator.of(context).pop();
-                  },
-                  child: Text("OK")),
-            ],
-          );
-        });
   }
 
   @override

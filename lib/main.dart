@@ -4,6 +4,8 @@ import 'package:fe_ezlang_admin/features/auth/signin/signin_vm.dart';
 import 'package:fe_ezlang_admin/features/home/home_screen.dart';
 import 'package:fe_ezlang_admin/features/auth/signup/signup_screen.dart';
 import 'package:fe_ezlang_admin/features/splash/splash_screen.dart';
+import 'package:fe_ezlang_admin/features/user/user_list/user_list_screen.dart';
+import 'package:fe_ezlang_admin/features/user/user_list/user_list_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,9 @@ class AdminApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => SignInVM(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserListVM(),
         )
       ],
       child: Consumer<SignInVM>(
@@ -40,7 +45,10 @@ class AdminApp extends StatelessWidget {
                       //     :
                       SignInScreen(),
                 ),
-          routes: {SignUpScreen.routeName: (context) => SignUpScreen()},
+          routes: {
+            SignUpScreen.routeName: (context) => SignUpScreen(),
+            UserListScreen.routeName: ((context) => UserListScreen())
+          },
         ),
       ),
     );
