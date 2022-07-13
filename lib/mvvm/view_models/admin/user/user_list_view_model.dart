@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/paging_list.dart';
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
-import 'package:fe_ezlang_admin/models/user_list.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/http_exception.dart';
-import 'package:fe_ezlang_admin/repositories/respository.dart';
+import '../../../models/user.dart';
+import '../../../views/admin/user/user_list_screen.dart';
+import '../../../../repositories/respository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserListVM with ChangeNotifier {
+class UserListVM extends State<UserListScreen> {
   bool _isLoading = false;
   List<UserModel>? _users;
   bool get isLoading {
@@ -18,8 +15,9 @@ class UserListVM with ChangeNotifier {
   }
 
   void set isLoading(bool isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
+    setState(() {
+      _isLoading = isLoading;
+    });
   }
 
   List<UserModel>? get users {
@@ -36,5 +34,11 @@ class UserListVM with ChangeNotifier {
     } finally {
       isLoading = false;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

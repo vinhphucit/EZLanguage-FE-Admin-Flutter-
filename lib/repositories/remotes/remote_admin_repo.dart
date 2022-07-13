@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/paging_list.dart';
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
-import 'package:fe_ezlang_admin/models/user_list.dart';
-import 'package:fe_ezlang_admin/repositories/admin_data_source.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/admin_api_service.dart';
+import '../../mvvm/models/user.dart';
+import '../../mvvm/models/pageable_permissions.dart';
+import '../../mvvm/models/pageable_roles.dart';
+import '../../mvvm/models/pageable_users.dart';
+import '../../mvvm/models/session.dart';
+import '../admin_data_source.dart';
+import 'admin_api_service.dart';
 
 class RemoteAdminRepo implements AdminDataSource {
   late AdminApiService _adminApiService;
@@ -44,7 +45,17 @@ class RemoteAdminRepo implements AdminDataSource {
   }
 
   @override
-  Future<UserListModel> getUsers() async {
+  Future<PageableUsersModel> getUsers() async {
     return await _adminApiService.getUsers();
+  }
+
+  @override
+  Future<PagableRolesModel> getRoles() async {
+    return await _adminApiService.getRoles();
+  }
+
+  @override
+  Future<PagablePermissionsModel> getPermissions() async {
+    return await _adminApiService.getPermissions();
   }
 }

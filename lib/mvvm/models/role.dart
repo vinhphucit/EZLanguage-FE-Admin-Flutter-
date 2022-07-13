@@ -1,4 +1,4 @@
-import 'package:fe_ezlang_admin/models/permission.dart';
+import 'permission.dart';
 
 class RoleModel {
   String? id;

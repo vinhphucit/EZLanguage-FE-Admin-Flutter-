@@ -1,4 +1,4 @@
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/http_exception.dart';
+import 'http_exception.dart';
 
 class InternalServerException extends HttpException {
   InternalServerException([message])

@@ -1,7 +1,8 @@
-import 'package:fe_ezlang_admin/models/paging_list.dart';
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
-import 'package:fe_ezlang_admin/models/user_list.dart';
+import '../mvvm/models/user.dart';
+import '../mvvm/models/pageable_permissions.dart';
+import '../mvvm/models/pageable_roles.dart';
+import '../mvvm/models/pageable_users.dart';
+import '../mvvm/models/session.dart';
 
 abstract class AdminDataSource {
   Future<Session> signIn(String email, String password);
@@ -10,5 +11,7 @@ abstract class AdminDataSource {
   Future<UserModel> signUp(
       String email, String password, String firstName, String lastName);
 
-  Future<UserListModel> getUsers();
+  Future<PageableUsersModel> getUsers();
+  Future<PagableRolesModel> getRoles();
+  Future<PagablePermissionsModel> getPermissions();
 }

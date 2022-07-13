@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/role.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
+import 'package:fe_ezlang_admin/mvvm/models/permission.dart';
+import 'package:fe_ezlang_admin/mvvm/models/role.dart';
 
-class UserListModel {
-  UserListModel({
+class PagablePermissionsModel {
+  PagablePermissionsModel({
     this.items,
     this.start,
     this.limit,
@@ -16,15 +16,16 @@ class UserListModel {
     this.query,
   });
 
-  List<UserModel>? items;
+  List<PermissionModel>? items;
   int? start;
   int? limit;
   int? totalItems;
   String? query;
 
-  factory UserListModel.fromJson(Map<String, dynamic> json) => UserListModel(
-        items: List<UserModel>.from(
-            json["items"].map((x) => UserModel.fromJson(x))),
+  factory PagablePermissionsModel.fromJson(Map<String, dynamic> json) =>
+      PagablePermissionsModel(
+        items: List<PermissionModel>.from(
+            json["items"].map((x) => PermissionModel.fromJson(x))),
         start: json["start"],
         limit: json["limit"],
         totalItems: json["totalItems"],

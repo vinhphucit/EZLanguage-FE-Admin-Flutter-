@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/http_exception.dart';
-import 'package:fe_ezlang_admin/repositories/respository.dart';
-import 'package:fe_ezlang_admin/utils/shared_pref_utils.dart';
+import 'package:fe_ezlang_admin/mvvm/views/auth/signin_screen.dart';
+import 'package:fe_ezlang_admin/mvvm/views/home/home_screen.dart';
+
+import '../../models/session.dart';
+import '../../../repositories/remotes/exceptions/http_exception.dart';
+import '../../../repositories/respository.dart';
+import '../../../utils/shared_pref_utils.dart';
 import 'package:flutter/material.dart';
 
-class SignInVM with ChangeNotifier {
+class SignInVM extends State<SignInScreen> {
   Session? _currentSession;
   DateTime? _expiryDate;
   Timer? _refreshTokenTimer;
@@ -18,8 +21,9 @@ class SignInVM with ChangeNotifier {
   }
 
   void set isLoading(bool isLoading) {
-    _isLoading = isLoading;
-    notifyListeners();
+    setState(() {
+      _isLoading = isLoading;
+    });
   }
 
   bool get isAuth {
@@ -47,7 +51,7 @@ class SignInVM with ChangeNotifier {
         if (!isRefreshTokenSuccessfully) return false;
       }
 
-      notifyListeners();
+      setState(() {});
     } catch (e) {
       print(e);
     }
@@ -60,6 +64,7 @@ class SignInVM with ChangeNotifier {
       isLoading = true;
       Session result = await Repository.getInstance().signIn(email, password);
       _handleNewSession(result);
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
     } catch (e) {
       throw e;
     } finally {
@@ -135,5 +140,11 @@ class SignInVM with ChangeNotifier {
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

@@ -1,6 +1,6 @@
-import 'package:fe_ezlang_admin/features/auth/signup/signup_vm.dart';
-import 'package:fe_ezlang_admin/features/base/base_screen.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
+import '../../models/user.dart';
+import '../../view_models/auth/signup_view_model.dart';
+import '../base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';

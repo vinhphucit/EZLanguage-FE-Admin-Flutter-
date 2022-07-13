@@ -1,4 +1,4 @@
-import 'package:fe_ezlang_admin/models/role.dart';
+import 'role.dart';
 
 class UserModel {
   String? id;

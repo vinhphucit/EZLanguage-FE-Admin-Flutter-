@@ -1,11 +1,10 @@
-import 'package:fe_ezlang_admin/features/auth/signin/signin_screen.dart';
-import 'package:fe_ezlang_admin/features/auth/signin/signin_vm.dart';
-
-import 'package:fe_ezlang_admin/features/home/home_screen.dart';
-import 'package:fe_ezlang_admin/features/auth/signup/signup_screen.dart';
-import 'package:fe_ezlang_admin/features/splash/splash_screen.dart';
-import 'package:fe_ezlang_admin/features/user/user_list/user_list_screen.dart';
-import 'package:fe_ezlang_admin/features/user/user_list/user_list_vm.dart';
+import 'mvvm/view_models/auth/signin_view_model.dart';
+import 'mvvm/views/admin/role/role_list_screen.dart';
+import 'mvvm/views/admin/user/user_list_screen.dart';
+import 'mvvm/views/auth/signin_screen.dart';
+import 'mvvm/views/auth/signup_screen.dart';
+import 'mvvm/views/home/home_screen.dart';
+import 'mvvm/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,39 +18,31 @@ class AdminApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SignInVM(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => UserListVM(),
-        )
-      ],
-      child: Consumer<SignInVM>(
-        builder: (context, authVM, child) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'EzLang Admin',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: authVM.isAuth
-              ? HomeScreen()
-              : FutureBuilder(
-                  future: authVM.tryAutoLogin(),
-                  builder: (ctx, authResultSnapshot) =>
-                      // authResultSnapshot.connectionState ==
-                      //         ConnectionState.waiting
-                      //     ? SplashScreen()
-                      //     :
-                      SignInScreen(),
-                ),
-          routes: {
-            SignUpScreen.routeName: (context) => SignUpScreen(),
-            UserListScreen.routeName: ((context) => UserListScreen())
-          },
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'EzLang Admin',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: SplashScreen(),
+      // authVM.isAuth
+      //     ? HomeScreen()
+      //     : FutureBuilder(
+      //         future: authVM.tryAutoLogin(),
+      //         builder: (ctx, authResultSnapshot) =>
+      //             // authResultSnapshot.connectionState ==
+      //             //         ConnectionState.waiting
+      //             //     ? SplashScreen()
+      //             //     :
+      //             SignInScreen(),
+      //       ),
+      routes: {
+        SignInScreen.routeName: (context) => SignInScreen(),
+        SignUpScreen.routeName: (context) => SignUpScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
+        UserListScreen.routeName: ((context) => UserListScreen()),
+        RoleListScreen.routeName: ((context) => RoleListScreen())
+      },
     );
   }
 }

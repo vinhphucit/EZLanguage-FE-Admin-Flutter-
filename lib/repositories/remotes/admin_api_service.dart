@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/paging_list.dart';
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
-import 'package:fe_ezlang_admin/models/user_list.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/base_api_service.dart';
+import '../../mvvm/models/user.dart';
+import '../../mvvm/models/pageable_permissions.dart';
+import '../../mvvm/models/pageable_roles.dart';
+import '../../mvvm/models/pageable_users.dart';
+import '../../mvvm/models/session.dart';
+import 'base_api_service.dart';
 
 class AdminApiService extends BaseApiService {
   final String baseUrl = 'https://ez-lang-alpha.herokuapp.com/ezlang/';
@@ -13,6 +14,8 @@ class AdminApiService extends BaseApiService {
   final String refreshTokenEndpoint = 'auth/refreshToken';
   final String signUpEndpoint = 'auth/signUp';
   final String usersEndpoint = 'users';
+  final String rolesEndpoint = 'roles';
+  final String permissionsEndpoint = 'permissions';
 
   Future<Session> signIn(String email, String password) async {
     return Session.fromJson(await post(
@@ -38,7 +41,16 @@ class AdminApiService extends BaseApiService {
     }));
   }
 
-  Future<UserListModel> getUsers() async {
-    return UserListModel.fromJson(await get('$baseUrl$usersEndpoint'));
+  Future<PageableUsersModel> getUsers() async {
+    return PageableUsersModel.fromJson(await get('$baseUrl$usersEndpoint'));
+  }
+
+  Future<PagableRolesModel> getRoles() async {
+    return PagableRolesModel.fromJson(await get('$baseUrl$rolesEndpoint'));
+  }
+
+  Future<PagablePermissionsModel> getPermissions() async {
+    return PagablePermissionsModel.fromJson(
+        await get('$baseUrl$permissionsEndpoint'));
   }
 }

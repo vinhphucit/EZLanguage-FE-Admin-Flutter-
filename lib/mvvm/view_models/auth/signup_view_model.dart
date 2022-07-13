@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/models/user.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/http_exception.dart';
-import 'package:fe_ezlang_admin/repositories/respository.dart';
+import '../../models/user.dart';
+import '../../../repositories/remotes/exceptions/http_exception.dart';
+import '../../../repositories/respository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/session.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../mvvm/models/session.dart';
 
 class SharedPrefUtils {
   static final String _PREF_SESSION = 'session';

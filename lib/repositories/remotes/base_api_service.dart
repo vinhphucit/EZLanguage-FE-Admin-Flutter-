@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:fe_ezlang_admin/models/error_response.dart';
-import 'package:fe_ezlang_admin/models/session.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/bad_request_exception.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/internal_server_exception.dart';
-import 'package:fe_ezlang_admin/repositories/remotes/exceptions/unauthorised_exception.dart';
-import 'package:fe_ezlang_admin/utils/shared_pref_utils.dart';
+import '../../mvvm/models/error_response.dart';
+import 'exceptions/bad_request_exception.dart';
+import 'exceptions/internal_server_exception.dart';
+import 'exceptions/unauthorised_exception.dart';
+import '../../utils/shared_pref_utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

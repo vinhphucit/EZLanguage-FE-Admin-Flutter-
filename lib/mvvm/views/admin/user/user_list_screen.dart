@@ -1,4 +1,5 @@
-import 'package:fe_ezlang_admin/features/user/user_list/user_list_vm.dart';
+import '../../../view_models/admin/user/user_list_view_model.dart';
+import '../../base/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -12,36 +13,30 @@ class UserListScreen extends StatefulWidget {
   State<UserListScreen> createState() => _UserListScreenState();
 }
 
-class _UserListScreenState extends State<UserListScreen> {
+class _UserListScreenState extends UserListVM {
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () async {
-        await Provider.of<UserListVM>(context, listen: false).getUsers();
-      },
-    );
-
     super.initState();
+    getUsers();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<UserListVM>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Users"),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
       ),
-      body: vm.isLoading
+      drawer: AppDrawer(),
+      body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-              itemCount: vm.users?.length ?? 0,
+              itemCount: users?.length ?? 0,
               itemBuilder: (context, index) => ListTile(
-                title: Text(vm.users![index].email!),
-                subtitle: Text((vm.users![index].firstName ?? '') +
+                title: Text(users![index].email!),
+                subtitle: Text((users![index].firstName ?? '') +
                     " " +
-                    (vm.users![index].lastName ?? '')),
+                    (users![index].lastName ?? '')),
                 onTap: () {},
               ),
             ),

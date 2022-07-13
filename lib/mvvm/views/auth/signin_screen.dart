@@ -1,6 +1,6 @@
-import 'package:fe_ezlang_admin/features/auth/signin/signin_vm.dart';
-import 'package:fe_ezlang_admin/features/auth/signup/signup_screen.dart';
-import 'package:fe_ezlang_admin/features/base/base_screen.dart';
+import '../../view_models/auth/signin_view_model.dart';
+import 'signup_screen.dart';
+import '../base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,7 +14,7 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> with BaseScreen {
+class _SignInScreenState extends SignInVM with BaseScreen {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String? email, password;
   Future<void> _submit() async {
