@@ -1,12 +1,14 @@
-class Permission {
+class PermissionModel {
   String? id;
   String? name;
   String? code;
   String? createdAt;
   String? updatedAt;
 
-  Permission({this.id, this.name, this.code, this.updatedAt, this.createdAt});
-  factory Permission.fromJson(Map<String, dynamic> json) => Permission(
+  PermissionModel(
+      {this.id, this.name, this.code, this.updatedAt, this.createdAt});
+  factory PermissionModel.fromJson(Map<String, dynamic> json) =>
+      PermissionModel(
         id: json["id"]!,
         name: json["name"],
         code: json["code"],

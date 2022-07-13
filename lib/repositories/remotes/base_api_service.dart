@@ -5,6 +5,7 @@ import 'package:fe_ezlang_admin/models/session.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/exceptions/bad_request_exception.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/exceptions/internal_server_exception.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/exceptions/unauthorised_exception.dart';
+import 'package:fe_ezlang_admin/utils/shared_pref_utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,15 +13,7 @@ abstract class BaseApiService {
   String? _accessToken;
 
   get accessToken async {
-    final prefs = await SharedPreferences.getInstance();
-    if (!prefs.containsKey('session')) {
-      return false;
-    }
-    final extractedUserData =
-        json.decode(prefs.getString('session') ?? '') as Map<String, dynamic>;
-
-    var _currentSession = Session.fromJson(extractedUserData);
-    return _currentSession.accessToken;
+    return await SharedPrefUtils.getAccessToken();
   }
 
   void updateToken(String? token) {
@@ -29,13 +22,13 @@ abstract class BaseApiService {
 
   Future<dynamic> get(String url) async {
     final uri = Uri.parse(url);
-    var a = await accessToken;
+    var token = await accessToken;
     final response = await http.get(
       uri,
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
-        if (a != null) 'Authorization': 'Bearer $a'
+        if (token != null) 'Authorization': 'Bearer $token'
       },
     );
     return returnResponse(response);
@@ -43,12 +36,13 @@ abstract class BaseApiService {
 
   Future<dynamic> post(String url, dynamic? body) async {
     final uri = Uri.parse(url);
-
+    var token = await accessToken;
     var rqBody = (body == null ? null : json.encode(body));
     final response = await http.post(uri,
         headers: {
           'accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token'
         },
         body: rqBody);
     return returnResponse(response);
@@ -56,12 +50,13 @@ abstract class BaseApiService {
 
   Future<dynamic> put(String url, dynamic? body) async {
     final uri = Uri.parse(url);
-
+    var token = await accessToken;
     var rqBody = (body == null ? null : json.encode(body));
     final response = await http.put(uri,
         headers: {
           'accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token'
         },
         body: rqBody);
     return returnResponse(response);
@@ -69,12 +64,13 @@ abstract class BaseApiService {
 
   Future<void> delete(String url) async {
     final uri = Uri.parse(url);
-
+    var token = await accessToken;
     final response = await http.delete(
       uri,
       headers: {
         'accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token'
       },
     );
 
@@ -102,8 +98,7 @@ abstract class BaseApiService {
       case 500:
       default:
         throw InternalServerException(
-            'Error occured while communication with server' +
-                ' with status code : ${ErrorResponse.fromJson(responseJson).description}');
+            ErrorResponse.fromJson(responseJson).description);
     }
   }
 }

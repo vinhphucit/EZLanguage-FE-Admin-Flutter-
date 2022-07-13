@@ -9,7 +9,7 @@ class UserModel {
   String? address;
   String? mobile;
   String? status;
-  List<Role>? roles;
+  List<RoleModel>? roles;
   String? createdAt;
   String? updatedAt;
 
@@ -32,7 +32,8 @@ class UserModel {
         lastName: json["lastName"],
         email: json["email"],
         status: json["status"],
-        roles: List<Role>.from(json["roles"].map((x) => Role.fromJson(x))),
+        roles: List<RoleModel>.from(
+            json["roles"].map((x) => RoleModel.fromJson(x))),
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
       );

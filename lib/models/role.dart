@@ -1,22 +1,23 @@
 import 'package:fe_ezlang_admin/models/permission.dart';
 
-class Role {
+class RoleModel {
   String? id;
   String? name;
-  List<Permission>? permissions;
+  List<PermissionModel>? permissions;
   String? createdAt;
   String? updatedAt;
-  Role({this.id, this.name, this.permissions, this.createdAt, this.updatedAt});
+  RoleModel(
+      {this.id, this.name, this.permissions, this.createdAt, this.updatedAt});
 
-  factory Role.fromJson(Map<String, dynamic> json) => Role(
+  factory RoleModel.fromJson(Map<String, dynamic> json) => RoleModel(
         id: json["id"],
         name: json["name"],
         createdAt: json["createdAt"],
         updatedAt: json["updatedAt"],
         permissions: json["permissions"] == null
             ? null
-            : List<Permission>.from(
-                json["permissions"].map((x) => Permission.fromJson(x))),
+            : List<PermissionModel>.from(
+                json["permissions"].map((x) => PermissionModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

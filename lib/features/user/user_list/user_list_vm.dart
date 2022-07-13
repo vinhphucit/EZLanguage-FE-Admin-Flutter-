@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserListVM with ChangeNotifier {
   bool _isLoading = false;
+  List<UserModel>? _users;
   bool get isLoading {
     return _isLoading;
   }
@@ -21,10 +22,15 @@ class UserListVM with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<UserListModel> getUsers() async {
+  List<UserModel>? get users {
+    return _users;
+  }
+
+  getUsers() async {
     try {
       isLoading = true;
-      return await Repository.getInstance().getUsers();
+      var userList = await Repository.getInstance().getUsers();
+      _users = userList.items;
     } catch (e) {
       throw e;
     } finally {

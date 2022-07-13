@@ -4,16 +4,10 @@ import 'dart:convert';
 import 'package:fe_ezlang_admin/models/session.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/exceptions/http_exception.dart';
 import 'package:fe_ezlang_admin/repositories/respository.dart';
+import 'package:fe_ezlang_admin/utils/shared_pref_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInVM with ChangeNotifier {
-  final String PREF_SESSION_KEY = 'session';
-  final String PREF_SESSION_ACCESSTOKEN = 'session';
-  final String PREF_SESSION_ACCESSTOKENEXPIRESIN = 'session';
-  final String PREF_SESSION_REFRESHTOKEN = 'session';
-  final String PREF_SESSION_REFRESHTOKENEXPIRESIN = 'session';
-
   Session? _currentSession;
   DateTime? _expiryDate;
   Timer? _refreshTokenTimer;
@@ -43,15 +37,8 @@ class SignInVM with ChangeNotifier {
 
   Future<bool> tryAutoLogin() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      if (!prefs.containsKey(PREF_SESSION_KEY)) {
-        return false;
-      }
-      final extractedUserData =
-          json.decode(prefs.getString(PREF_SESSION_KEY) ?? '')
-              as Map<String, dynamic>;
-
-      _currentSession = Session.fromJson(extractedUserData);
+      _currentSession = await SharedPrefUtils.getSession();
+      if (_currentSession == null) return false;
       _expiryDate = DateTime.fromMillisecondsSinceEpoch(
           (_currentSession?.accessTokenExpiresAt ?? 0) * 1000);
 
@@ -73,8 +60,6 @@ class SignInVM with ChangeNotifier {
       isLoading = true;
       Session result = await Repository.getInstance().signIn(email, password);
       _handleNewSession(result);
-    } on HttpException catch (e) {
-      throw (e as HttpException).toString();
     } catch (e) {
       throw e;
     } finally {
@@ -116,18 +101,15 @@ class SignInVM with ChangeNotifier {
     } finally {}
   }
 
-  Future<void> _handleNewSession(Session? result) async {
-    _currentSession = result;
-    final prefs = await SharedPreferences.getInstance();
-    if (result == null) {
+  Future<void> _handleNewSession(Session? session) async {
+    _currentSession = session;
+    SharedPrefUtils.saveSession(session);
+    if (session == null) {
       _expiryDate = null;
-      prefs.remove(PREF_SESSION_KEY);
       _cancelRefreshToken();
     } else {
       _expiryDate = DateTime.fromMillisecondsSinceEpoch(
-          result.accessTokenExpiresAt * 1000);
-      final currentSession = json.encode(_currentSession);
-      prefs.setString(PREF_SESSION_KEY, currentSession);
+          session.accessTokenExpiresAt * 1000);
       _autoRefreshToken();
     }
   }

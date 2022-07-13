@@ -3,10 +3,9 @@ import 'package:fe_ezlang_admin/models/session.dart';
 import 'package:fe_ezlang_admin/models/user.dart';
 import 'package:fe_ezlang_admin/models/user_list.dart';
 import 'package:fe_ezlang_admin/repositories/admin_data_source.dart';
-import 'package:fe_ezlang_admin/repositories/data_source.dart';
 import 'package:fe_ezlang_admin/repositories/remotes/remote_admin_repo.dart';
 
-class Repository implements DataSource, AdminDataSource {
+class Repository implements AdminDataSource {
   static Repository? _instance;
 
   AdminDataSource remoteAdminRepo = RemoteAdminRepo();

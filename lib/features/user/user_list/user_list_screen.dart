@@ -17,10 +17,8 @@ class _UserListScreenState extends State<UserListScreen> {
   void initState() {
     Future.delayed(
       Duration.zero,
-      () {
-        Provider.of<UserListVM>(context, listen: false)
-            .getUsers()
-            .then((value) => print(value));
+      () async {
+        await Provider.of<UserListVM>(context, listen: false).getUsers();
       },
     );
 
@@ -29,6 +27,24 @@ class _UserListScreenState extends State<UserListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final vm = Provider.of<UserListVM>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Users"),
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.add))],
+      ),
+      body: vm.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: vm.users?.length ?? 0,
+              itemBuilder: (context, index) => ListTile(
+                title: Text(vm.users![index].email!),
+                subtitle: Text((vm.users![index].firstName ?? '') +
+                    " " +
+                    (vm.users![index].lastName ?? '')),
+                onTap: () {},
+              ),
+            ),
+    );
   }
 }

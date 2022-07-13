@@ -30,6 +30,7 @@ class AdminApp extends StatelessWidget {
       ],
       child: Consumer<SignInVM>(
         builder: (context, authVM, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'EzLang Admin',
           theme: ThemeData(
             primarySwatch: Colors.blue,
