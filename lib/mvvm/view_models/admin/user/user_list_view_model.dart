@@ -7,7 +7,7 @@ import '../../../../repositories/respository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserListVM extends State<UserListScreen> {
+class UserListVM extends State<UserListScreen> with ChangeNotifier {
   bool _isLoading = false;
   List<UserModel> _users = [];
   bool get isLoading {
@@ -15,9 +15,8 @@ class UserListVM extends State<UserListScreen> {
   }
 
   void set isLoading(bool isLoading) {
-    setState(() {
-      _isLoading = isLoading;
-    });
+    _isLoading = isLoading;
+    notifyListeners();
   }
 
   List<UserModel> get users {
@@ -29,6 +28,7 @@ class UserListVM extends State<UserListScreen> {
       isLoading = true;
       var userList = await Repository.getInstance().getUsers();
       _users = userList.items ?? [];
+      notifyListeners();
     } catch (e) {
       throw e;
     } finally {

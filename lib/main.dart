@@ -1,4 +1,5 @@
 import 'package:fe_ezlang_admin/core/colors.dart';
+import 'package:fe_ezlang_admin/mvvm/view_models/admin/user/user_list_view_model.dart';
 import 'package:fe_ezlang_admin/mvvm/view_models/components/header_view_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,6 +28,9 @@ class AdminApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => HeaderVM(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => UserListVM(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
