@@ -1,5 +1,5 @@
 import '../../../view_models/admin/role/role_list_view_model.dart';
-import '../../base/app_drawer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -26,7 +26,6 @@ class _RoleListScreenState extends RoleListVM {
       appBar: AppBar(
         title: Text("Roles"),
       ),
-      drawer: AppDrawer(),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(

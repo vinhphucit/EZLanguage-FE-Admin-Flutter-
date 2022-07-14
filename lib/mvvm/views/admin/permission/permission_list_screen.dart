@@ -1,5 +1,5 @@
 import '../../../view_models/admin/permission/permission_list_view_model.dart';
-import '../../base/app_drawer.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -24,7 +24,6 @@ class _PermissionListScreenState extends PermissionListVM {
       appBar: AppBar(
         title: Text("Permissions"),
       ),
-      drawer: AppDrawer(),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(

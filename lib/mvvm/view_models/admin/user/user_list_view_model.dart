@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserListVM extends State<UserListScreen> {
   bool _isLoading = false;
-  List<UserModel>? _users;
+  List<UserModel> _users = [];
   bool get isLoading {
     return _isLoading;
   }
@@ -20,7 +20,7 @@ class UserListVM extends State<UserListScreen> {
     });
   }
 
-  List<UserModel>? get users {
+  List<UserModel> get users {
     return _users;
   }
 
@@ -28,7 +28,7 @@ class UserListVM extends State<UserListScreen> {
     try {
       isLoading = true;
       var userList = await Repository.getInstance().getUsers();
-      _users = userList.items;
+      _users = userList.items ?? [];
     } catch (e) {
       throw e;
     } finally {

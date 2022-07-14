@@ -1,6 +1,8 @@
+import 'package:fe_ezlang_admin/mvvm/views/components/base_screen.dart';
+
 import '../../view_models/auth/signin_view_model.dart';
 import 'signup_screen.dart';
-import '../base/base_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,8 +27,7 @@ class _SignInScreenState extends SignInVM with BaseScreen {
 
     _formKey.currentState?.save();
     try {
-      await Provider.of<SignInVM>(context, listen: false)
-          .signIn(email ?? '', password ?? '');
+      signIn(email ?? '', password ?? '');
     } catch (e) {
       showErrorDialog(context, e.toString());
     }
@@ -73,18 +74,13 @@ class _SignInScreenState extends SignInVM with BaseScreen {
                   SizedBox(
                     height: 20,
                   ),
-                  Consumer<SignInVM>(
-                    builder: (context, authVM, child) {
-                      if (authVM.isLoading) {
-                        return CircularProgressIndicator();
-                      } else {
-                        return ElevatedButton(
-                          onPressed: _submit,
-                          child: Text("Login"),
-                        );
-                      }
-                    },
-                  ),
+                  if (isLoading)
+                    CircularProgressIndicator()
+                  else
+                    ElevatedButton(
+                      onPressed: _submit,
+                      child: Text("Login"),
+                    ),
                   SizedBox(
                     height: 20,
                   ),

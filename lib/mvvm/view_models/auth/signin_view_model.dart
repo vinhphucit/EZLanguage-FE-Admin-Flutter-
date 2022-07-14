@@ -10,7 +10,7 @@ import '../../../repositories/respository.dart';
 import '../../../utils/shared_pref_utils.dart';
 import 'package:flutter/material.dart';
 
-class SignInVM extends State<SignInScreen> {
+class SignInVM extends State<SignInScreen> with ChangeNotifier {
   Session? _currentSession;
   DateTime? _expiryDate;
   Timer? _refreshTokenTimer;

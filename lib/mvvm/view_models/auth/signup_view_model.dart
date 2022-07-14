@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:fe_ezlang_admin/mvvm/views/auth/signup_screen.dart';
+
 import '../../models/user.dart';
 import '../../../repositories/remotes/exceptions/http_exception.dart';
 import '../../../repositories/respository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUpVM with ChangeNotifier {
+class SignUpVM extends State<SignUpScreen> with ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading {
     return _isLoading;
@@ -31,5 +33,11 @@ class SignUpVM with ChangeNotifier {
     } finally {
       isLoading = false;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }

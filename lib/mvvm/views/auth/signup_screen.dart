@@ -1,12 +1,21 @@
+import 'package:fe_ezlang_admin/mvvm/views/components/base_screen.dart';
+
 import '../../models/user.dart';
 import '../../view_models/auth/signup_view_model.dart';
-import '../base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-class SignUpScreen extends StatelessWidget with BaseScreen {
+class SignUpScreen extends StatefulWidget {
+  static final String routeName = 'signup';
+  const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends SignUpVM with BaseScreen {
   static final String routeName = 'signup';
   final GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -16,8 +25,6 @@ class SignUpScreen extends StatelessWidget with BaseScreen {
   String? firstName;
 
   final _passwordFieldController = TextEditingController();
-
-  SignUpScreen({Key? key}) : super(key: key);
 
   void _submit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) {
@@ -119,18 +126,13 @@ class SignUpScreen extends StatelessWidget with BaseScreen {
                 SizedBox(
                   height: 20,
                 ),
-                Consumer<SignUpVM>(
-                  builder: (context, vm, child) {
-                    if (vm.isLoading) {
-                      return CircularProgressIndicator();
-                    } else {
-                      return ElevatedButton(
-                        onPressed: () => _submit(context),
-                        child: Text("SignUp"),
-                      );
-                    }
-                  },
-                ),
+                if (isLoading)
+                  CircularProgressIndicator()
+                else
+                  ElevatedButton(
+                    onPressed: () => _submit(context),
+                    child: Text("SignUp"),
+                  )
               ],
             )),
       ),
