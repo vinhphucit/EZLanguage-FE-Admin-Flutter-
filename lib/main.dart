@@ -14,7 +14,13 @@ class AdminApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      theme: ThemeData.dark(),
+      // theme: ThemeData.dark().copyWith(
+      //   elevatedButtonTheme: ElevatedButtonThemeData(
+      //     style: ElevatedButton.styleFrom(
+      //       primary: Colors.purple,
+      //     ),
+      //   ),
+      // ),
       title: 'EzLang Admin',
       home: SignInScreen(),
       routes: {},
